@@ -21,7 +21,7 @@ void ACppBaseActor::BeginPlay()
 {
 	Super::BeginPlay();
 	ShowActorInformation();
-	InitialLocation = FVector(this->GetActorLocation());
+	InitialLocation = this->GetActorLocation();
 }
 
 // Called every frame
