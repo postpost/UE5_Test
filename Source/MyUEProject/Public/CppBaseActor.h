@@ -50,32 +50,30 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	void ShowInformation();
+	void ShowActorInformation();
 
-	//visible everywhere but cannot be changed
-	UPROPERTY(VisibleAnyWhere)
-	FString playerName = "Netology";
+	UFUNCTION(BlueprintCallable)
+	void SinMovement();
 
-	//can be edited anywhere
-	UPROPERTY(EditAnyWhere)
-	int EnemyNum = 20;
-
-	//can be edited in property window of the base classes = archetype only
-	UPROPERTY(EditDefaultsOnly)
-	float CurrentHealth = 57.54687;
-
-	//can be edited in property window of the instanced objects only
+	// Amplitude, Frequency, InitialLocation
 	UPROPERTY(EditInstanceOnly)
-	bool isAlive = true;
+	float Amplitude = 20;
+
+	UPROPERTY(EditInstanceOnly)
+	float Frequency = 5;
+
+	FVector InitialLocation;
 
 	UPROPERTY(VisibleDefaultsOnly)
-	bool isVisible = false;
+	FString InstanceName = GetName();
+
+	UPROPERTY(EditInstanceOnly)
+	int EnemyCount = 30;
+
+	UPROPERTY(EditInstanceOnly)
+	bool isAlive = true;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-private:
-
-
 };

@@ -3,6 +3,7 @@
 
 #include "CppBaseActor.h"
 #include "Engine/Engine.h"
+#include "Engine/World.h"
 
 // Sets default values
 ACppBaseActor::ACppBaseActor()
@@ -19,7 +20,8 @@ ACppBaseActor::ACppBaseActor()
 void ACppBaseActor::BeginPlay()
 {
 	Super::BeginPlay();
-	//ShowInformation();
+	ShowActorInformation();
+	InitialLocation = FVector(this->GetActorLocation());
 }
 
 // Called every frame
@@ -29,19 +31,19 @@ void ACppBaseActor::Tick(float DeltaTime)
 
 }
 
-void ACppBaseActor::ShowInformation()
+void ACppBaseActor::ShowActorInformation()
 {
-	UE_LOG(LogTemp, Display, TEXT("CppBase from here"));
-	UE_LOG(LogTemp, Warning, TEXT("CppBase класс ошибка?"));
-	UE_LOG(LogTemp, Error, TEXT("CppBase 異體字"));
-
-
-	UE_LOG(LogTemp, Display, TEXT("EnemyNum: %d"), EnemyNum);
-	UE_LOG(LogTemp, Display, TEXT("CurrentHealth: %f"), CurrentHealth);
+	UE_LOG(LogTemp, Display, TEXT("InstanceName: %s"), *InstanceName);
+	UE_LOG(LogTemp, Display, TEXT("EnemyCount: %d"), EnemyCount);
 	UE_LOG(LogTemp, Display, TEXT("isAlive: %i"), isAlive);
-
-	UE_LOG(LogTemp, Display, TEXT("playerName: %s"), *playerName);
-
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Magenta, playerName, true, FVector2D(2.0f, 2.0f));
 }
 
+void ACppBaseActor::SinMovement() 
+{
+
+	float ZVector = InitialLocation.Z;
+	double TimeSecs = GetWorld()->GetTimeSeconds();
+	ZVector = ZVector + Amplitude * FMath::Sin(TimeSecs * Frequency);
+	FVector newLocation{InitialLocation.X,InitialLocation.Y, ZVector};
+	SetActorLocation(newLocation);
+}
